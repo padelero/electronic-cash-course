@@ -9,8 +9,16 @@ import {
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
+import { useAuth } from "@/context/AuthContext";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const { isClerkAvailable } = useAuth();
+  const navigate = useNavigate();
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted/50 px-4">
       <div className="fixed inset-0 -z-10 bg-[url('https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&auto=format&fit=crop&w=2232&q=80')] bg-cover bg-center bg-no-repeat opacity-10"></div>
@@ -26,27 +34,45 @@ const Register = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <SignUp 
-            routing="path" 
-            path="/register" 
-            redirectUrl="/dashboard"
-            appearance={{
-              elements: {
-                rootBox: "w-full mx-auto",
-                card: "shadow-none w-full !bg-transparent border-none",
-                headerTitle: "hidden",
-                headerSubtitle: "hidden",
-                socialButtonsBlockButton: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-                formFieldInput: "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-                formButtonPrimary: "bg-bitcoincash hover:bg-bitcoincash/90 text-primary-foreground rounded-md px-4 py-2 w-full",
-                footerAction: "hidden"
-              },
-              variables: {
-                colorPrimary: "#f7931a",
-                borderRadius: "0.25rem"
-              }
-            }}
-          />
+          {!isClerkAvailable ? (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Autenticación no disponible</AlertTitle>
+              <AlertDescription>
+                La autenticación está desactivada porque no se ha configurado una clave de Clerk válida.
+                <br /><br />
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => navigate('/')}
+                >
+                  Volver al inicio
+                </Button>
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <SignUp 
+              routing="path" 
+              path="/register" 
+              redirectUrl="/dashboard"
+              appearance={{
+                elements: {
+                  rootBox: "w-full mx-auto",
+                  card: "shadow-none w-full !bg-transparent border-none",
+                  headerTitle: "hidden",
+                  headerSubtitle: "hidden",
+                  socialButtonsBlockButton: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+                  formFieldInput: "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+                  formButtonPrimary: "bg-bitcoincash hover:bg-bitcoincash/90 text-primary-foreground rounded-md px-4 py-2 w-full",
+                  footerAction: "hidden"
+                },
+                variables: {
+                  colorPrimary: "#f7931a",
+                  borderRadius: "0.25rem"
+                }
+              }}
+            />
+          )}
         </CardContent>
         <CardFooter>
           <div className="text-center text-sm w-full">

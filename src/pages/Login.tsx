@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignIn } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
@@ -11,9 +10,13 @@ import {
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
+import { useAuth } from "@/context/AuthContext";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { isClerkAvailable } = useAuth();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted/50 px-4">
@@ -30,27 +33,45 @@ const Login = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <SignIn 
-            routing="path" 
-            path="/login" 
-            redirectUrl="/dashboard"
-            appearance={{
-              elements: {
-                rootBox: "w-full mx-auto",
-                card: "shadow-none w-full !bg-transparent border-none",
-                headerTitle: "hidden",
-                headerSubtitle: "hidden",
-                socialButtonsBlockButton: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-                formFieldInput: "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-                formButtonPrimary: "bg-bitcoin hover:bg-bitcoin/90 text-primary-foreground rounded-md px-4 py-2 w-full",
-                footerAction: "hidden"
-              },
-              variables: {
-                colorPrimary: "#f7931a",
-                borderRadius: "0.25rem"
-              }
-            }}
-          />
+          {!isClerkAvailable ? (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Autenticación no disponible</AlertTitle>
+              <AlertDescription>
+                La autenticación está desactivada porque no se ha configurado una clave de Clerk válida.
+                <br /><br />
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => navigate('/')}
+                >
+                  Volver al inicio
+                </Button>
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <SignIn 
+              routing="path" 
+              path="/login" 
+              redirectUrl="/dashboard"
+              appearance={{
+                elements: {
+                  rootBox: "w-full mx-auto",
+                  card: "shadow-none w-full !bg-transparent border-none",
+                  headerTitle: "hidden",
+                  headerSubtitle: "hidden",
+                  socialButtonsBlockButton: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+                  formFieldInput: "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+                  formButtonPrimary: "bg-bitcoin hover:bg-bitcoin/90 text-primary-foreground rounded-md px-4 py-2 w-full",
+                  footerAction: "hidden"
+                },
+                variables: {
+                  colorPrimary: "#f7931a",
+                  borderRadius: "0.25rem"
+                }
+              }}
+            />
+          )}
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-center text-sm">

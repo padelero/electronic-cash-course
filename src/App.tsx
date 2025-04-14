@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,10 +16,16 @@ const queryClient = new QueryClient();
 
 // Protected Route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, isClerkAvailable } = useAuth();
+  
+  // Si Clerk no está disponible, mostramos mensaje en consola y redirigimos
+  if (!isClerkAvailable) {
+    console.warn('⚠️ Acceso a ruta protegida sin autenticación configurada. Configura VITE_CLERK_PUBLISHABLE_KEY');
+    return <Navigate to="/login" replace />;
+  }
   
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center">Cargando...</div>;
   }
   
   if (!isAuthenticated) {
