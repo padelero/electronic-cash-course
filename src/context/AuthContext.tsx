@@ -1,5 +1,6 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { useUser, useAuth as useClerkAuth } from "@clerk/clerk-react";
 
 type User = {
   id: string;
@@ -13,106 +14,58 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  login: () => void;
+  register: () => void;
   logout: () => void;
   updateProfile: (data: Partial<User>) => Promise<void>;
 }
 
-// Create context with a default value
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isLoading: true,
   isAuthenticated: false,
-  login: async () => {},
-  register: async () => {},
+  login: () => {},
+  register: () => {},
   logout: () => {},
   updateProfile: async () => {},
 });
 
-// Create a hook to use the auth context
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const { isLoaded, isSignedIn, user: clerkUser } = useUser();
+  const { signOut } = useClerkAuth();
+
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is stored in localStorage (this is temporary for the demo)
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (isLoaded && isSignedIn && clerkUser) {
+      setUser({
+        id: clerkUser.id,
+        name: clerkUser.fullName || clerkUser.firstName || 'Usuario',
+        email: clerkUser.primaryEmailAddress?.emailAddress || '',
+        role: 'student' // Ajusta esto según tu lógica de roles
+      });
+    } else if (isLoaded && !isSignedIn) {
+      setUser(null);
     }
-    setIsLoading(false);
-  }, []);
+  }, [isLoaded, isSignedIn, clerkUser]);
 
-  // Mock login function - in a real app, this would call an API
-  const login = async (email: string, password: string) => {
-    setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock user data (in a real app this would come from the backend)
-    const mockUser = {
-      id: '1',
-      name: 'Demo User',
-      email,
-      role: 'student' as const,
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    setIsLoading(false);
-  };
+  const login = () => {};  // Clerk maneja el login
+  const register = () => {};  // Clerk maneja el registro
+  const logout = () => signOut();
 
-  // Mock register function
-  const register = async (name: string, email: string, password: string) => {
-    setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const mockUser = {
-      id: '1',
-      name,
-      email,
-      role: 'student' as const,
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    setIsLoading(false);
-  };
-
-  // Logout function
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-  };
-
-  // Update profile function
-  const updateProfile = async (data: Partial<User>) => {
-    setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    if (user) {
-      const updatedUser = { ...user, ...data };
-      setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-    }
-    
-    setIsLoading(false);
+  const updateProfile = async () => {
+    // Implementar lógica de actualización de perfil con Clerk
+    return Promise.resolve();
   };
 
   return (
     <AuthContext.Provider 
       value={{ 
         user, 
-        isLoading, 
-        isAuthenticated: !!user, 
+        isLoading: !isLoaded, 
+        isAuthenticated: !!isSignedIn, 
         login, 
         register, 
         logout,
@@ -123,3 +76,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     </AuthContext.Provider>
   );
 };
+
