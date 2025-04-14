@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Courses from "./pages/Courses";
 import NotFound from "./pages/NotFound";
+import Rewards from "./pages/Rewards";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const AppRoutes = () => (
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
     <Route path="/courses" element={<Courses />} />
+    <Route path="/rewards" element={<Rewards />} />
     <Route path="/dashboard" element={
       <ProtectedRoute>
         <Dashboard />

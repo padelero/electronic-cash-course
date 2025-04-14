@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -51,6 +52,10 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Custom colors for Bitcoin and Bitcoin Cash */
+    --bitcoin: 39 91% 54%;
+    --bitcoincash: 163 85% 41%;
   }
 
   .dark {
@@ -100,4 +105,21 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Color utilities for Bitcoin and Bitcoin Cash */
+.text-bitcoin {
+  color: hsl(39, 91%, 54%);
+}
+
+.text-bitcoincash {
+  color: hsl(163, 85%, 41%);
+}
+
+.bg-bitcoin {
+  background-color: hsl(39, 91%, 54%);
+}
+
+.bg-bitcoincash {
+  background-color: hsl(163, 85%, 41%);
 }

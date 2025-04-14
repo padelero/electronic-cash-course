@@ -1,10 +1,10 @@
-
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/CourseCard";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { mockCourses } from "@/data/mockData";
+import { WaitlistForm } from "@/components/WaitlistForm";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -73,6 +73,13 @@ const Index = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Waitlist Section */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <WaitlistForm />
           </div>
         </section>
 
