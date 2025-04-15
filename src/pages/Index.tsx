@@ -4,7 +4,7 @@ import { CourseCard } from "@/components/CourseCard";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { mockCourses } from "@/data/mockData";
-import { WaitlistForm } from "@/components/WaitlistForm";
+import { ClerkWaitlist } from "@/components/ClerkWaitlist";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -60,7 +60,6 @@ const Index = () => {
                     className="w-full h-auto"
                   />
                 </div>
-                {/* Bitcoin and Bitcoin Cash logos floating elements for decoration */}
                 <div className="absolute -top-5 -left-5 bg-white p-3 rounded-full shadow-lg z-10 hidden md:block">
                   <div className="h-10 w-10 rounded-full bg-[#F7931A] flex items-center justify-center">
                     <span className="text-white font-bold">₿</span>
@@ -79,7 +78,7 @@ const Index = () => {
         {/* Waitlist Section */}
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
-            <WaitlistForm />
+            <ClerkWaitlist />
           </div>
         </section>
 
