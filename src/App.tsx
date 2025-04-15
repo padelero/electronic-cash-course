@@ -12,7 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import Courses from "./pages/Courses";
 import NotFound from "./pages/NotFound";
 import Rewards from "./pages/Rewards";
-import Database from "./pages/Database";
+import Users from "./pages/Users";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +44,7 @@ const AppRoutes = () => (
     <Route path="/register" element={<Register />} />
     <Route path="/courses" element={<Courses />} />
     <Route path="/rewards" element={<Rewards />} />
-    <Route path="/database" element={<Database />} />
+    <Route path="/users" element={<Users />} />
     <Route path="/dashboard" element={
       <ProtectedRoute>
         <Dashboard />

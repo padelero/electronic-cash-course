@@ -29,8 +29,8 @@ export function Navbar() {
               <Link to="/rewards" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 hover:border-bitcoincash hover:text-foreground transition">
                 Recompensas
               </Link>
-              <Link to="/database" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 hover:border-bitcoin hover:text-foreground transition">
-                Base de Datos
+              <Link to="/users" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 hover:border-bitcoin hover:text-foreground transition">
+                Usuarios
               </Link>
               <Link to="/about" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 hover:border-gray-300 hover:text-foreground transition">
                 Acerca de
@@ -94,8 +94,8 @@ export function Navbar() {
             <Link to="/rewards" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium hover:bg-gray-50 hover:border-bitcoincash transition">
               Recompensas
             </Link>
-            <Link to="/database" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium hover:bg-gray-50 hover:border-bitcoin transition">
-              Base de Datos
+            <Link to="/users" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium hover:bg-gray-50 hover:border-bitcoin transition">
+              Usuarios
             </Link>
             <Link to="/about" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium hover:bg-gray-50 hover:border-gray-300 transition">
               Acerca de
