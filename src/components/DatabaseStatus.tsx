@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import { API_CONFIG } from "../config/api.config";
+import { API_CONFIG, DB_CONFIG } from "../config/api.config";
 
 export function DatabaseStatus() {
   const [isConnected, setIsConnected] = useState<boolean | null>(null);
@@ -13,9 +13,8 @@ export function DatabaseStatus() {
   const checkConnection = async () => {
     setIsLoading(true);
     try {
-      // Aquí iría una llamada a un endpoint que compruebe la conexión a la base de datos
-      // Por ahora simulamos una respuesta
-      const response = await fetch(`${API_CONFIG.BASE_URL}/status`);
+      // Hacemos una llamada al endpoint status para verificar la conexión
+      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.STATUS}`);
       
       if (response.ok) {
         const data = await response.json();
@@ -34,6 +33,7 @@ export function DatabaseStatus() {
         });
       }
     } catch (error) {
+      console.error("Error al verificar la conexión:", error);
       setIsConnected(false);
       toast({
         title: "Error de conexión",
@@ -84,7 +84,7 @@ export function DatabaseStatus() {
           {isLoading ? 'Verificando...' : 'Verificar conexión'}
         </Button>
         <div className="mt-2 text-sm text-gray-500">
-          Conexión a: 127.0.0.1:3306
+          Conexión a: {DB_CONFIG.HOST}:{DB_CONFIG.PORT}
         </div>
       </div>
     </div>
