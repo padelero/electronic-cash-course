@@ -11,8 +11,8 @@ export const DB_CONFIG = {
 };
 
 export const API_CONFIG = {
-  // Actualizado para usar /api y que el proxy lo reescriba correctamente
-  BASE_URL: '/api', 
+  // Cambiar de '/api' a 'https://padelvalles.com'
+  BASE_URL: 'https://padelvalles.com', 
   ENDPOINTS: {
     COURSES: '/courses',
     USERS: '/users',
