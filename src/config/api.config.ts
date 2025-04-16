@@ -12,7 +12,7 @@ export const DB_CONFIG = {
 
 export const API_CONFIG = {
   // Actualiza esta URL para que apunte a donde hospedarás tus archivos PHP
-  BASE_URL: 'https://padelvalles.com/api', // O http://tu-ip/api
+  BASE_URL: '/api', // En lugar de 'https://padelvalles.com/api'
   ENDPOINTS: {
     COURSES: '/courses',
     USERS: '/users',
@@ -21,3 +21,4 @@ export const API_CONFIG = {
     STATUS: '/status'
   }
 };
+
