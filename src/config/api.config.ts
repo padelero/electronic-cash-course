@@ -11,8 +11,8 @@ export const DB_CONFIG = {
 };
 
 export const API_CONFIG = {
-  // Actualiza esta URL para que apunte a donde hospedarás tus archivos PHP
-  BASE_URL: '/api', // En lugar de 'https://padelvalles.com/api'
+  // Actualizado para usar /api y que el proxy lo reescriba correctamente
+  BASE_URL: '/api', 
   ENDPOINTS: {
     COURSES: '/courses',
     USERS: '/users',

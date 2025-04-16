@@ -18,7 +18,12 @@ export default defineConfig({
       '/api': {
         target: 'https://padelvalles.com',
         changeOrigin: true,
-        secure: true,
+        secure: false, // Cambiado a false para ignorar certificados SSL
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        headers: {
+          'Origin': 'https://padelvalles.com', // Simular que la petición viene del mismo origen
+          'Referer': 'https://padelvalles.com/'
+        },
         // Esto es opcional pero útil para debugging
         configure: (proxy, _options) => {
           proxy.on('error', (err, _req, _res) => {
