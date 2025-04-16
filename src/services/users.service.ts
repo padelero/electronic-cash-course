@@ -5,18 +5,19 @@ import { User } from '../types';
 
 class UsersService {
   async getAllUsers(): Promise<User[]> {
-    console.log("Obteniendo todos los usuarios...");
-    const response = await apiService.get<User[]>(API_CONFIG.ENDPOINTS.USERS);
-    console.log("Respuesta de getAllUsers:", response);
-    return response.success ? response.data : [];
-  }
+  const endpoint = `${API_CONFIG.ENDPOINTS.USERS}/get.php`;
+  const response = await apiService.get<User[]>(endpoint);
+  console.log("Respuesta de getAllUsers:", response);
+  return response.success ? response.data : [];
+}
 
-  async getUserById(id: string): Promise<User | null> {
-    console.log(`Obteniendo usuario con ID: ${id}`);
-    const response = await apiService.get<User>(`${API_CONFIG.ENDPOINTS.USERS}/${id}`);
-    console.log(`Respuesta de getUserById(${id}):`, response);
-    return response.success ? response.data : null;
-  }
+async getUserById(id: string): Promise<User | null> {
+  const endpoint = `${API_CONFIG.ENDPOINTS.USERS}/get.php?id=${id}`;
+  const response = await apiService.get<User>(`${endpoint}`);
+  console.log(`Respuesta de getUserById(${id}):`, response);
+  return response.success ? response.data : null;
+}
+
 
   async createUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<User | null> {
     console.log("Creando nuevo usuario:", userData);
