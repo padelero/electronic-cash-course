@@ -18,7 +18,6 @@ async getUserById(id: string): Promise<User | null> {
   return response.success ? response.data : null;
 }
 
-
   async createUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<User | null> {
     console.log("Creando nuevo usuario:", userData);
     const response = await apiService.post<User>(API_CONFIG.ENDPOINTS.USERS, userData);
