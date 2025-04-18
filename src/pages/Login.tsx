@@ -53,7 +53,7 @@ const Login = () => {
             <SignIn 
               routing="path" 
               path="/login" 
-              redirectUrl="/dashboard"
+              redirectUrl="/profile"
               appearance={{
                 elements: {
                   rootBox: "w-full mx-auto",

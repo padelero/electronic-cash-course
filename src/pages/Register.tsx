@@ -54,7 +54,7 @@ const Register = () => {
             <SignUp 
               routing="path" 
               path="/register" 
-              redirectUrl="/dashboard"
+              redirectUrl="/profile"
               appearance={{
                 elements: {
                   rootBox: "w-full mx-auto",

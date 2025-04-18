@@ -13,6 +13,7 @@ import Courses from "./pages/Courses";
 import NotFound from "./pages/NotFound";
 import Rewards from "./pages/Rewards";
 import Users from "./pages/Users";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -40,8 +41,8 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Index />} />
-    <Route path="/login" element={<Login />} />
-    <Route path="/register" element={<Register />} />
+    <Route path="/login/*" element={<Login />} />
+    <Route path="/register/*" element={<Register />} />
     <Route path="/courses" element={<Courses />} />
     <Route path="/rewards" element={<Rewards />} />
     <Route path="/users" element={<Users />} />
@@ -50,6 +51,7 @@ const AppRoutes = () => (
         <Dashboard />
       </ProtectedRoute>
     } />
+    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
     <Route path="*" element={<NotFound />} />
   </Routes>
