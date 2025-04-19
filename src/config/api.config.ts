@@ -11,8 +11,7 @@ export const DB_CONFIG = {
 };
 
 export const API_CONFIG = {
-  // Cambiar de '/api' a 'https://padelvalles.com'
-  BASE_URL: 'https://padelvalles.com/api', 
+  BASE_URL: window.location.hostname === 'localhost' ? '/api' : 'https://cee.padelvalles.com/api',
   ENDPOINTS: {
     COURSES: '/courses',
     USERS: '/users',

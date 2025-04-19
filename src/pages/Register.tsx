@@ -14,6 +14,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useSignUp } from "@clerk/clerk-react";
 
 const Register = () => {
   const { isClerkAvailable } = useAuth();
@@ -88,3 +89,19 @@ const Register = () => {
 };
 
 export default Register;
+
+// ... inside your Register component, after successful sign up:
+const handleAfterSignUp = async (user) => {
+  await fetch('/api/users/sync.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      id: user.id,
+      email: user.emailAddress,
+      name: user.fullName,
+      role: user.publicMetadata?.role || 'student',
+      wallet_address: user.publicMetadata?.wallet_address || null,
+    }),
+  });
+};
+// Call handleAfterSignUp after Clerk registration is successful

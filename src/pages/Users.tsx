@@ -8,12 +8,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { toast } from '@/hooks/use-toast';
+import UserCreateForm from "./UserCreateForm";
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
   const loadUsers = async () => {
     try {
@@ -146,6 +148,27 @@ const Users = () => {
           </CardContent>
         </Card>
       </div>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold">Usuarios</h1>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={loadUsers}>
+            Actualizar
+          </Button>
+          <Button onClick={() => setShowCreateForm((v) => !v)}>
+            {showCreateForm ? "Cerrar formulario" : "Crear usuario"}
+          </Button>
+        </div>
+      </div>
+      {showCreateForm && (
+        <div className="mb-8">
+          <UserCreateForm
+            onSuccess={() => {
+              setShowCreateForm(false);
+              if (typeof loadUsers === "function") loadUsers();
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
