@@ -92,15 +92,15 @@ export default Register;
 
 // ... inside your Register component, after successful sign up:
 const handleAfterSignUp = async (user) => {
-  await fetch('/api/users/sync.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  await fetch("https://cee.padelvalles.com/api/users/sync.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       id: user.id,
-      email: user.emailAddress,
-      name: user.fullName,
-      role: user.publicMetadata?.role || 'student',
-      wallet_address: user.publicMetadata?.wallet_address || null,
+      email: user.emailAddresses?.[0]?.emailAddress, // <-- Añade esta línea
+      name: user.fullName || `${user.firstName} ${user.lastName}` || "Sin nombre",
+      wallet_address: user.wallet_address,
+      role: user.role,
     }),
   });
 };
